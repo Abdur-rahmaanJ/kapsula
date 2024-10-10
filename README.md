@@ -1,2 +1,2 @@
 # swoosh
-Dead simple docs generator and 
+Dead simple docs generator and codebase onboarding tool
