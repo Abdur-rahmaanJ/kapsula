@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "swoosh"
 version = "0.1.0"
-description = "Dead simple docs generator"
+description = "Dead simple docs generator. Originally used at Metabob.com"
 authors = [{"name"= "ARJ"}]
 dependencies = []
 
