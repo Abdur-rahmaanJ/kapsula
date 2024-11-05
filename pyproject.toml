@@ -7,7 +7,7 @@ name = "swoosh"
 version = "0.1.0"
 description = "Dead simple docs generator"
 authors = [{"name"= "ARJ"}]
-dependencies = ['click']
+dependencies = []
 
 [project.scripts]
 swoosh = "swoosh:main"

@@ -3,8 +3,6 @@ import ast
 from typing import List, Tuple
 import sys
 
-excludes = ['venv']
-
 def get_file_docstring(filepath: str) -> str:
     with open(filepath, 'r') as file:
         try:
@@ -23,15 +21,18 @@ def get_function_info(filepath: str) -> List[Tuple[str, str, List[str]]]:
             return functions
     
     for node in ast.walk(tree):
-        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-            name = node.name
-            docstring = ast.get_docstring(node) or ""
-            params = [arg.arg for arg in node.args.args]  # Extract parameter names
-            functions.append((name, docstring, params))
+        try:
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                name = node.name
+                docstring = ast.get_docstring(node) or ""
+                params = [arg.arg for arg in node.args.args]  # Extract parameter names
+                functions.append((name, docstring, params))
+        except Exception as e:
+            raise e
     
     return functions
 
-def generate_html(directories: List[str], output_file: str) -> None:
+def generate_html(directories: List[str], output_file: str, flags:dict) -> None:
     html_content = ["<html><head><title>Project Documentation</title>"]
     
     html_content.append("""
@@ -102,6 +103,8 @@ def generate_html(directories: List[str], output_file: str) -> None:
     all_functions = []
 
     for directory in directories:
+        if directory.startswith('--'):
+            break
 
         html_content.append(f'<li><span class="caret">{os.path.basename(directory)}</span>')
         html_content.append('<ul class="nested">')
@@ -110,13 +113,14 @@ def generate_html(directories: List[str], output_file: str) -> None:
         for root, dirs, files in os.walk(directory):
             if is_break:
                 break
-            for to_exclude in excludes:
-                if root.strip('./') in to_exclude:
-                    print(root.strip('./'))
+            for to_exclude in flags['--exclude']:
+                if to_exclude+'/' in root:
                     is_break = True
 
             for file in files:
                 if file.endswith('.py'):
+                    if flags['--debug']:
+                        print('[*] Analysing', root, file)
                     filepath = os.path.join(root, file)
                     relpath = os.path.relpath(filepath, directory)
 
@@ -167,13 +171,40 @@ def generate_html(directories: List[str], output_file: str) -> None:
 
 
 
+def parse_flags(args):
+    flags = {
+        "--exclude": ['venv', 'venv_12'],
+        "--debug": False
+    }
+    
+    i = 0
+    while i < len(args):
+        arg = args[i]
+
+        if arg == "--exclude":
+            i += 1
+            while i < len(args) and not args[i].startswith("--"):
+               
+                flags["--exclude"].append(args[i])
+                i += 1
+            i -= 1
+        elif arg == '--debug':
+            flags['--debug'] = True
+
+        i += 1
+
+    return flags
 
 
 def main():
     args = sys.argv[1:]
+    flags = parse_flags(args)
     dirs = args
     output = 'documentation.html'
-    generate_html(dirs, output)
+
+    if flags['--debug']:
+        print(flags)
+    generate_html(dirs, output, flags)
 
 
 if __name__ == '__main__':
