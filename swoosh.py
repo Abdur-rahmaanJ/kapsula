@@ -3,6 +3,8 @@ import ast
 from typing import List, Tuple
 import sys
 
+excludes = ['venv']
+
 def get_file_docstring(filepath: str) -> str:
     with open(filepath, 'r') as file:
         try:
@@ -100,10 +102,19 @@ def generate_html(directories: List[str], output_file: str) -> None:
     all_functions = []
 
     for directory in directories:
+
         html_content.append(f'<li><span class="caret">{os.path.basename(directory)}</span>')
         html_content.append('<ul class="nested">')
 
+        is_break = False
         for root, dirs, files in os.walk(directory):
+            if is_break:
+                break
+            for to_exclude in excludes:
+                if root.strip('./') in to_exclude:
+                    print(root.strip('./'))
+                    is_break = True
+
             for file in files:
                 if file.endswith('.py'):
                     filepath = os.path.join(root, file)
@@ -162,7 +173,7 @@ def main():
     args = sys.argv[1:]
     dirs = args
     output = 'documentation.html'
-    generate_html(output, dirs)
+    generate_html(dirs, output)
 
 
 if __name__ == '__main__':
