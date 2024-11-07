@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "kapsula"
-version = "0.1.0"
+version = "0.1.1"
 description = "Dead simple docs generator. Originally used at Metabob.com"
 authors = [{"name"= "ARJ"}]
 dependencies = []
