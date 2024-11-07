@@ -1,0 +1,124 @@
+<html><head><title>Project Documentation</title>
+
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        ul, #fileTree, #functionList { list-style-type: none; padding-left: 0; }
+        li { margin-left: 20px; cursor: pointer; }
+        .nested { display: none; }
+        .active { display: block; }
+        .caret { font-weight: bold; }
+        .caret::before { content: "\25B6"; margin-right: 6px; }
+        .caret-down::before { content: "\25BC"; }
+        #functionList { display: none; }
+        .toggle-btn { margin: 20px; padding: 10px; background-color: #007BFF; color: white; border: none; cursor: pointer; }
+        .search-box { margin: 20px; }
+        #viewTitle { display: none; font-weight: bold; margin-top: 20px; }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var togglers = document.getElementsByClassName("caret");
+            for (var i = 0; i < togglers.length; i++) {
+                togglers[i].addEventListener("click", function() {
+                    this.parentElement.querySelector(".nested").classList.toggle("active");
+                    this.classList.toggle("caret-down");
+                });
+            }
+            
+            // Toggle between file tree and function list views
+            document.getElementById("toggleViewBtn").addEventListener("click", function() {
+                var fileTree = document.getElementById("fileTree");
+                var functionList = document.getElementById("functionList");
+                var viewTitle = document.getElementById("viewTitle");
+                
+                if (fileTree.style.display === "none") {
+                    fileTree.style.display = "block";
+                    functionList.style.display = "none";
+                    viewTitle.style.display = "none";
+                } else {
+                    fileTree.style.display = "none";
+                    functionList.style.display = "block";
+                    viewTitle.style.display = "block";
+                }
+            });
+            
+            // Search functionality
+            document.getElementById("searchBox").addEventListener("input", function() {
+                var query = this.value.toLowerCase();
+                var files = document.querySelectorAll("#fileTree li, #functionList li");
+                files.forEach(function(file) {
+                    if (file.textContent.toLowerCase().includes(query)) {
+                        file.style.display = "";
+                    } else {
+                        file.style.display = "none";
+                    }
+                });
+            });
+        });
+    </script>
+    </head><body>
+<h1>Project Documentation</h1>
+<div class="search-box"><input type="text" id="searchBox" placeholder="Search functions or files..."></div>
+<button id="toggleViewBtn" class="toggle-btn">Toggle View</button>
+<div id="viewTitle"></div>
+<ul id="fileTree">
+<li><span class="caret">.</span>
+<ul class="nested">
+<li><span class="caret">kapsula.py</span>
+<ul class="nested">
+<li><span class="caret">Function: get_file_docstring</span>
+<ul class="nested">
+<li><strong>Parameters:</strong> filepath</li>
+<li><strong>Docstring:</strong> No docstring</li>
+</ul></li>
+<li><span class="caret">Function: get_function_info</span>
+<ul class="nested">
+<li><strong>Parameters:</strong> filepath</li>
+<li><strong>Docstring:</strong> No docstring</li>
+</ul></li>
+<li><span class="caret">Function: generate_html</span>
+<ul class="nested">
+<li><strong>Parameters:</strong> directories, output_file, flags</li>
+<li><strong>Docstring:</strong> No docstring</li>
+</ul></li>
+<li><span class="caret">Function: parse_flags</span>
+<ul class="nested">
+<li><strong>Parameters:</strong> args</li>
+<li><strong>Docstring:</strong> No docstring</li>
+</ul></li>
+<li><span class="caret">Function: main</span>
+<ul class="nested">
+<li><strong>Parameters:</strong> No parameters</li>
+<li><strong>Docstring:</strong> No docstring</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<ul id="functionList">
+<h2>Function List</h2>
+<li><strong>get_file_docstring</strong> in <em>kapsula.py</em>
+<ul>
+<li><strong>Parameters:</strong> filepath</li>
+<li><strong>Docstring:</strong> No docstring</li>
+</ul></li>
+<li><strong>get_function_info</strong> in <em>kapsula.py</em>
+<ul>
+<li><strong>Parameters:</strong> filepath</li>
+<li><strong>Docstring:</strong> No docstring</li>
+</ul></li>
+<li><strong>generate_html</strong> in <em>kapsula.py</em>
+<ul>
+<li><strong>Parameters:</strong> directories, output_file, flags</li>
+<li><strong>Docstring:</strong> No docstring</li>
+</ul></li>
+<li><strong>parse_flags</strong> in <em>kapsula.py</em>
+<ul>
+<li><strong>Parameters:</strong> args</li>
+<li><strong>Docstring:</strong> No docstring</li>
+</ul></li>
+<li><strong>main</strong> in <em>kapsula.py</em>
+<ul>
+<li><strong>Parameters:</strong> No parameters</li>
+<li><strong>Docstring:</strong> No docstring</li>
+</ul></li>
+</ul>
+</body></html>

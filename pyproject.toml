@@ -3,11 +3,17 @@ requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "swoosh"
+name = "kapsula"
 version = "0.1.0"
 description = "Dead simple docs generator. Originally used at Metabob.com"
 authors = [{"name"= "ARJ"}]
 dependencies = []
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
 
 [project.scripts]
-swoosh = "swoosh:main"
+kapsula = "kapsula:main"
