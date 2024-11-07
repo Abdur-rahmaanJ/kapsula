@@ -1,3 +1,9 @@
+<div align=center width=150>
+
+  ![](https://raw.githubusercontent.com/Abdur-rahmaanJ/kapsula/stable/assets/logo.png)
+  
+</div>
+
 # kapsula
 
 Dead simple docs generator.
@@ -11,3 +17,18 @@ kapsula /path --debug # debug
 ```
 
 Makes onboarding a breeze!
+
+
+## Generated Doc
+
+- Treeview
+
+![](https://raw.githubusercontent.com/Abdur-rahmaanJ/kapsula/stable/assets/tree_view.png)
+
+- List view
+
+![](https://raw.githubusercontent.com/Abdur-rahmaanJ/kapsula/stable/assets/list_view.png)
+
+- Search
+
+![](https://raw.githubusercontent.com/Abdur-rahmaanJ/kapsula/stable/assets/search.png)
