@@ -12,7 +12,7 @@ Have a clear view of the codebase without knowing any tooling
 
 ```
 kapsula . # path to folder
-kapsula --exclude venv another_folder # excludes folders, venv excluded by default
+kapsula path/ --exclude venv another_folder # excludes folders, venv excluded by default
 kapsula /path --debug # debug
 ```
 
