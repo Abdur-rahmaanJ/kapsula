@@ -6,6 +6,10 @@
 
 # kapsula
 
+>  "In 2025 the docs should be a single your_project.md text file that is intended to go into the context window of an LLM."
+> 
+> -- Andrej Karpathy
+
 Great for adding markdown docs to llm.
 
 Dead simple docs generator. Generates html and markdown docs. 
