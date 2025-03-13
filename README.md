@@ -13,11 +13,11 @@ Dead simple docs generator. Generates html and markdown docs.
 Have a clear view of the codebase without knowing any tooling
 
 ```
-python -m kapsula . # path to folder
-python -m kapsula path/ --exclude venv another_folder # excludes folders, venv excluded by default
-python -m kapsula /path --debug # debug
-python -m kapsula [directories] [output.html] [output.md] [flags]
-python -m kapsula scripts buns docs.html docs.md --exclude venv
+kapsula . # path to folder
+kapsula path/ --exclude venv another_folder # excludes folders, venv excluded by default
+kapsula /path --debug # debug
+kapsula [directories] [output.html] [output.md] [flags]
+kapsula scripts buns docs.html docs.md --exclude venv
 ```
 
 Makes onboarding a breeze!
