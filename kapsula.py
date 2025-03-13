@@ -169,6 +169,53 @@ def generate_html(directories: List[str], output_file: str, flags:dict) -> None:
     
     print(f"HTML documentation written to {output_file}")
 
+def generate_markdown(directories: List[str], output_file: str, flags: dict) -> None:
+    md_content = ["# Project Documentation\n"]
+
+    for directory in directories:
+        if directory.startswith('--'):
+            break
+
+        md_content.append(f"## {os.path.basename(directory)}\n")
+
+        is_break = False
+        for root, dirs, files in os.walk(directory):
+            if is_break:
+                break
+            for to_exclude in flags['--exclude']:
+                if to_exclude + '/' in root:
+                    is_break = True
+
+            for file in files:
+                if file.endswith('.py'):
+                    if flags['--debug']:
+                        print('[*] Analysing', root, file)
+                    filepath = os.path.join(root, file)
+                    relpath = os.path.relpath(filepath, directory)
+
+                    md_content.append(f"### {relpath}\n")
+
+                    file_docstring = get_file_docstring(filepath)
+                    if file_docstring:
+                        md_content.append(f"**File Docstring:** {file_docstring}\n")
+
+                    functions = get_function_info(filepath)
+                    if functions:
+                        for func_name, func_docstring, params in functions:
+                            param_list = ', '.join(params) if params else 'No parameters'
+                            func_docstring_md = func_docstring if func_docstring else 'No docstring'
+
+                            md_content.append(f"#### Function: {func_name}\n")
+                            md_content.append(f"- **Parameters:** {param_list}\n")
+                            md_content.append(f"- **Docstring:** {func_docstring_md}\n")
+
+    with open(output_file, 'w') as file:
+        file.write(''.join(md_content))
+
+    print(f"Markdown documentation written to {output_file}")
+
+# Example usage
+# generate_markdown(['your_directory'], 'documentation.md', parse_flags(['--exclude', 'venv']))
 
 
 def parse_flags(args):
@@ -199,12 +246,27 @@ def parse_flags(args):
 def main():
     args = sys.argv[1:]
     flags = parse_flags(args)
-    dirs = args
-    output = 'documentation.html'
+
+    # Extract directories and output file from arguments
+    dirs = []
+    output_html = 'documentation.html'
+    output_md = 'documentation.md'
+
+    for arg in args:
+        if arg.startswith('--'):
+            continue  # Skip flags
+        elif arg.endswith('.html'):
+            output_html = arg
+        elif arg.endswith('.md'):
+            output_md = arg
+        else:
+            dirs.append(arg)
 
     if flags['--debug']:
         print(flags)
-    generate_html(dirs, output, flags)
+
+    generate_html(dirs, output_html, flags)
+    generate_markdown(dirs, output_md, flags)
 
 
 if __name__ == '__main__':
