@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "kapsula"
-version = "0.2.0"
+version = "0.2.1"
 description = "Great for adding markdown docs to llm. Dead simple docs generator. Originally used at Metabob.com"
 authors = [{"name"= "ARJ"}]
 dependencies = []
@@ -26,6 +26,9 @@ classifiers = [
 [project.scripts]
 kapsula = "kapsula:main"
 
+
+[tool.setuptools]
+py-modules = ["kapsula"]
 
 [project.urls]
 "Homepage" = "https://github.com/Abdur-RahmaanJ/kapsula"
